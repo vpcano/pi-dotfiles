@@ -1,0 +1,19 @@
+# Secrets
+auth.json
+extensions/web-search/auth.json
+
+# Managed install (handled by the pi installer)
+install/
+bin/
+
+# Runtime caches & session data
+sessions/
+tmp/
+models-store.json
+git/
+
+# Extension dependencies
+node_modules/
+
+# Browser automation profile (cookies, cache)
+extensions/browser/.profile/
