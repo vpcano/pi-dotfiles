@@ -1,7 +1,9 @@
 {
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.0",
   "deviceId": "5e8d012d-f939-4aee-a258-42b2c869afbc",
   "packages": [
-    "git:github.com/amosblomqvist/pi-interactive-subagents"
-  ]
+    "git:github.com/amosblomqvist/pi-interactive-subagents",
+    "npm:pi-vim-editor"
+  ],
+  "hideThinkingBlock": true
 }

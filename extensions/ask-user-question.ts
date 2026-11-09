@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import { type ExtensionAPI, keyText } from "@mariozechner/pi-coding-agent";
 import {
 	Editor,
 	type EditorTheme,
@@ -212,7 +212,7 @@ async function askSingleChoice(
 		{ id: "other", label: otherLabel, value: "__other__", isOther: true },
 	];
 
-	return ctx.ui.custom<AskAnswer | null>((tui: any, theme: any, _kb: any, done: (result: AskAnswer | null) => void) => {
+	return ctx.ui.custom<AskAnswer | null>((tui: any, theme: any, kb: any, done: (result: AskAnswer | null) => void) => {
 		let optionIndex = 0;
 		let editMode = false;
 		let cachedLines: string[] | undefined;
@@ -243,12 +243,12 @@ async function askSingleChoice(
 				return;
 			}
 
-			if (matchesKey(data, Key.up)) {
+			if (kb.matches(data, "tui.select.up")) {
 				optionIndex = Math.max(0, optionIndex - 1);
 				refresh();
 				return;
 			}
-			if (matchesKey(data, Key.down)) {
+			if (kb.matches(data, "tui.select.down")) {
 				optionIndex = Math.min(allOptions.length - 1, optionIndex + 1);
 				refresh();
 				return;
@@ -314,7 +314,7 @@ async function askSingleChoice(
 				add(theme.fg("dim", " Enter to submit • Esc to go back"));
 			} else {
 				lines.push("");
-				add(theme.fg("dim", " ↑↓ navigate • Enter select • Esc cancel"));
+				add(theme.fg("dim", ` ${keyText("tui.select.up")}/${keyText("tui.select.down")} navigate • Enter select • Esc cancel`));
 			}
 
 			add(theme.fg("accent", "─".repeat(width)));
@@ -352,7 +352,7 @@ async function askMultiChoice(
 		submitItem,
 	];
 
-	return ctx.ui.custom<AskAnswer[] | null>((tui: any, theme: any, _kb: any, done: (result: AskAnswer[] | null) => void) => {
+	return ctx.ui.custom<AskAnswer[] | null>((tui: any, theme: any, kb: any, done: (result: AskAnswer[] | null) => void) => {
 		let optionIndex = 0;
 		let editMode = false;
 		let cachedLines: string[] | undefined;
@@ -400,12 +400,12 @@ async function askMultiChoice(
 				return;
 			}
 
-			if (matchesKey(data, Key.up)) {
+			if (kb.matches(data, "tui.select.up")) {
 				optionIndex = Math.max(0, optionIndex - 1);
 				refresh();
 				return;
 			}
-			if (matchesKey(data, Key.down)) {
+			if (kb.matches(data, "tui.select.down")) {
 				optionIndex = Math.min(allItems.length - 1, optionIndex + 1);
 				refresh();
 				return;
@@ -519,7 +519,7 @@ async function askMultiChoice(
 				if (selected.size === 0) {
 					add(theme.fg("warning", " Select at least one answer before submitting."));
 				}
-				add(theme.fg("dim", " ↑↓ navigate • Space toggle • Enter edit/submit • Esc cancel"));
+				add(theme.fg("dim", ` ${keyText("tui.select.up")}/${keyText("tui.select.down")} navigate • Space toggle • Enter edit/submit • Esc cancel`));
 			}
 
 			add(theme.fg("accent", "─".repeat(width)));
